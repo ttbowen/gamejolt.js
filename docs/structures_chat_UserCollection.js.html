@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Game Jolt.js Source: structures/chat/UserCollection.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.flatly.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Game Jolt.js</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Client.html">Client</a></li><li><a href="ClientUser.html">ClientUser</a></li><li><a href="Compatibility.html">Compatibility</a></li><li><a href="EventManager.html">EventManager</a></li><li><a href="FeaturedGame.html">FeaturedGame</a></li><li><a href="FriendRequest.html">FriendRequest</a></li><li><a href="Game.html">Game</a></li><li><a href="GameOverview.html">GameOverview</a></li><li><a href="MediaItem.html">MediaItem</a></li><li><a href="Message.html">Message</a></li><li><a href="Notification.html">Notification</a></li><li><a href="PrimusManager.html">PrimusManager</a></li><li><a href="RateLimiter.html">RateLimiter</a></li><li><a href="Room.html">Room</a></li><li><a href="SiteAPIManager.html">SiteAPIManager</a></li><li><a href="SiteUser.html">SiteUser</a></li><li><a href="User.html">User</a></li><li><a href="UserCollection.html">UserCollection</a></li><li><a href="UserFriendship.html">UserFriendship</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#addMention">addMention</a></li><li><a href="global.html#bold">bold</a></li><li><a href="global.html#ChatConfig">ChatConfig</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#Endpoints">Endpoints</a></li><li><a href="global.html#Events">Events</a></li><li><a href="global.html#italic">italic</a></li><li><a href="global.html#PublicRooms">PublicRooms</a></li><li><a href="global.html#strikeout">strikeout</a></li><li><a href="global.html#tigrs">tigrs</a></li><li><a href="global.html#underline">underline</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: structures/chat/UserCollection.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
+
+const _ = require('lodash');
+
+/**
+ * Represents a user collection
+ * @class UserCollection
+ */
+class UserCollection {
+
+    /**
+     * Creates an instance of UserCollection.
+     * 
+     * @param {any} users User collection object
+     * 
+     * @constructor
+     */
+    constructor(users) {
+        this.collection = [];
+        this.useronline = 0;
+        this.useroffline = 0;
+        this.populate(users);
+    }
+
+    /**
+     * Get the user collection
+     * @readonly
+     */
+    get users() {
+        return this.collection;
+    }
+
+
+    /**
+     * 
+     * Populate the collection
+     * @param {any} users The user collection
+     * 
+     * @memberof UserCollection
+     */
+    populate(users) {
+        for (let u in users) {
+            let user = users[u];
+
+            if (user.isOnline) {
+                ++this.useronline;
+            }
+            else {
+                ++this.useroffline;
+            }
+            this.collection.push(user);
+        }
+    }
+
+    /**
+     * Get a user from collection
+     * @param {any} input The user or user Id
+     * @returns {any}
+     * 
+     * @memberof UserCollection
+     */
+    get(input) {
+        let userId = typeof input === 'number' ? input : input.id;
+        return _.find(this.collection, { id: userId });
+    }
+
+    /**
+     * Check if user is in collection
+     * @param {any} input
+     * @returns {boolean}
+     * 
+     * @memberof UserCollection
+     */
+    has(input) {
+        return !!this.get(input);
+    }
+
+    /**
+     * Add a new user to collection
+     * @param {any} user The user to add
+     * 
+     * @memberof UserCollection
+     */
+    add(user) {
+        if (this.has(user))
+            return;
+
+        if (user.isOnline)
+            ++this.useronline;
+        else
+            ++this.useroffline;
+
+        this.collection.push(user);
+    }
+
+    /**
+     * Remove a user from collection
+     * @param {any} user The user to remove
+     * 
+     * @memberof UserCollection
+     */
+    remove(user) {
+        let userId = typeof user === 'number' ? user : user.id;
+        let removedUsers = _.remove(this.collection, { id: userId });
+
+        if (!removedUsers.length)
+            return;
+
+        if (removedUsers[0].isOnline)
+            --this.useronline;
+        else
+            --this.useroffline;
+    }
+
+    /**
+     * Update a user in collection
+     * @param {any} user The user to update 
+     * 
+     * @memberof UserCollection
+     */
+    update(user) {
+        this.remove(user.id);
+        this.add(user);
+    }
+
+    /**
+     * Change a users status to online
+     * @param {any} input
+     * 
+     * @memberof UserCollection
+     */
+    online(input) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        if (!user.isOnline) {
+            --this.useroffline;
+            ++this.useronline;
+        }
+        user.isOnline = true;
+        this.update(user);
+    }
+
+    /**
+     * Change a users status to offline
+     * @param {any} input
+     * 
+     * @memberof UserCollection
+     */
+    offline(input) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        if (user.isOnline) {
+            ++this.useroffline;
+            --this.useronline;
+        }
+    }
+
+    /**
+     * Change a users status to muted
+     * @param {any} input The user to mute
+     * @param {boolean} isGlobal Is a global mute
+     * 
+     * @memberof UserCollection
+     */
+    mute(input, isGlobal) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        if (isGlobal)
+            user.isMutedGlobal = true;
+        else
+            user.isMutedRoom = true;
+
+        this.update(user);
+    }
+
+    /**
+     * Change a users status to unmuted
+     * @param {any} input The user to unmute
+     * @param {boolean} isGlobal Is a global unmute
+     * 
+     * @memberof UserCollection
+     */
+    unmute(input, isGlobal) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        if (isGlobal)
+            user.isMutedGlobal = false;
+        else
+            user.isMutedRoom = false;
+
+        this.update(user);
+    }
+
+    /**
+     * Change a user to room moderator status
+     * @param {any} input The user to mod
+     * 
+     * @memberOf UserCollection
+     */
+    mod(input) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        user.isMod = 'moderator';
+        this.update(user);
+    }
+
+    /**
+     * Remove a users moderator status
+     * @param {any} input The user to demod
+     * 
+     * @memberof UserCollection
+     */
+    demod(input) {
+        let user = this.get(input);
+
+        if (!user)
+            return;
+
+        user.isMod = false;
+        this.update(user);
+    }
+
+    getByRoom(input) {
+        let roomId = typeof input === 'number' ? input : input.id;
+        return _.find(this.collection, { roomId: roomId });
+    }
+}
+
+module.exports = UserCollection;</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on Mon May 29th 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

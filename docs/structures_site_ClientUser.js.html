@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Game Jolt.js Source: structures/site/ClientUser.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.flatly.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Game Jolt.js</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Client.html">Client</a></li><li><a href="ClientUser.html">ClientUser</a></li><li><a href="Compatibility.html">Compatibility</a></li><li><a href="EventManager.html">EventManager</a></li><li><a href="FeaturedGame.html">FeaturedGame</a></li><li><a href="FriendRequest.html">FriendRequest</a></li><li><a href="Game.html">Game</a></li><li><a href="GameOverview.html">GameOverview</a></li><li><a href="MediaItem.html">MediaItem</a></li><li><a href="Message.html">Message</a></li><li><a href="Notification.html">Notification</a></li><li><a href="PrimusManager.html">PrimusManager</a></li><li><a href="RateLimiter.html">RateLimiter</a></li><li><a href="Room.html">Room</a></li><li><a href="SiteAPIManager.html">SiteAPIManager</a></li><li><a href="SiteUser.html">SiteUser</a></li><li><a href="User.html">User</a></li><li><a href="UserCollection.html">UserCollection</a></li><li><a href="UserFriendship.html">UserFriendship</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#addMention">addMention</a></li><li><a href="global.html#bold">bold</a></li><li><a href="global.html#ChatConfig">ChatConfig</a></li><li><a href="global.html#cloneObject">cloneObject</a></li><li><a href="global.html#Endpoints">Endpoints</a></li><li><a href="global.html#Events">Events</a></li><li><a href="global.html#italic">italic</a></li><li><a href="global.html#PublicRooms">PublicRooms</a></li><li><a href="global.html#strikeout">strikeout</a></li><li><a href="global.html#tigrs">tigrs</a></li><li><a href="global.html#underline">underline</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: structures/site/ClientUser.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">'use strict';
+
+const SiteUser = require('./SiteUser');
+const ProfileEdit = require('../../client/api/payloads/ProfileEdit');
+const EmailEdit = require('../../client/api/payloads/EmailEdit');
+
+/**
+ * Represents the Client user
+ * @class ClientUser
+ */
+class ClientUser extends SiteUser {
+
+    /**
+     * Creates an instance of ClientUser.
+     * 
+     * @param {Client} client The Game Jolt client
+     * @param {any} data The user data
+     * 
+     * @constructor
+     */
+    constructor(client, data) {
+        super(client, data);
+    }
+
+
+    /**
+     * Set a new password
+     * @param {string} oldPassword
+     * @param {string} newPassword
+     * @returns {Promise}
+     * 
+     * @memberof ClientUser
+     */
+    setPassword(oldPassword, newPassword) {
+        return new Promise((resolve) => {
+            const data = {
+                 old_password: oldPassword, 
+                 password: newPassword 
+            }
+            this.client.api.changePassword(data).then((response) => {
+                resolve(response.success);
+            });
+        });
+    }
+
+
+    /**
+     * Set a new email
+     * @param {string} email
+     * @returns {Promise}
+     * 
+     * @memberof ClientUser
+     */
+    setEmail(email) { 
+        return new Promise((resolve) => {
+            const instance = this;
+
+            this.client.api.emailPreferences('get').then((data) => {              
+                const payload = new EmailEdit(data.user);
+                payload.email_address = email;
+
+                const json = JSON.stringify(payload);
+
+                instance.client.api.emailPreferences('post', json).then((response) => {
+                    resolve(response.success);
+                });               
+            });
+        });        
+    }
+
+
+    /**
+     * Set a new username
+     * @param {string} username
+     * @returns {Promise}
+     * 
+     * @memberof ClientUser
+     */
+    setUsername(username) { 
+        return new Promise((resolve) => {
+            const instance = this;
+
+            this.client.api.save('get').then((data) => {              
+                const payload = new ProfileEdit(data.user);
+                payload.username = username;
+
+                const json = JSON.stringify(payload);
+
+                instance.client.api.save('post', json).then((response) => {
+                    resolve(response.success);
+                });               
+            });
+        });        
+    }
+
+
+    /**
+     * Set a new display name
+     * @param {string} name
+     * @returns {Promise}
+     * 
+     * @memberof ClientUser
+     */
+    setNickname(name) { 
+        return new Promise((resolve) => {
+            const instance = this;
+
+            this.client.api.save('get').then((data) => {              
+                const payload = new ProfileEdit(data.user);
+                payload.display_name = name;
+
+                const json = JSON.stringify(payload);
+
+                instance.client.api.save('post', json).then((response) => {
+                    resolve(response.success);
+                });               
+            });
+        });     
+    }
+    
+    
+    /**
+     * Set a new profile bio
+     * @param {string} content
+     * @returns {Promise}
+     * 
+     * @memberof ClientUser
+     */
+    setBio(content) { 
+        return new Promise((resolve) => {
+            const instance = this;
+
+            this.client.api.save('get').then((data) => {              
+                const payload = new ProfileEdit(data.user);
+                payload.description_markdown = content;
+
+                const json = JSON.stringify(payload);
+
+                instance.client.api.save('post', json).then((response) => {
+                    resolve(response.success);
+                });               
+            });
+        });    
+    }
+}
+
+module.exports = ClientUser;</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on Mon May 29th 2017
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

@@ -19,7 +19,7 @@
     "url": "git+https://github.com/bowenwaregames/gamejolt.js.git"
   },
   "author": "Thomas Bowen <ttbowen11@hotmail.co.uk>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.15.0",
     "colour": "^0.7.1",

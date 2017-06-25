@@ -14,6 +14,7 @@ declare module 'gamejolt.js' {
         public userId: number;
         public user: User;
         public roomId: number;
+        public room: Room;
         public content: string;
         public contentRaw: string;
         public loggedOn: Date;

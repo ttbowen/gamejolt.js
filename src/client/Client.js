@@ -93,6 +93,12 @@ class Client extends events.EventEmitter {
          * @type {PrimusManager}
          */
         this.primus = new PrimusManager(this);
+        
+        /**
+         * Friend request count. This is fetched by the client.
+         * @type {number}
+         */
+        this.friendRequestCount = 0;
 
         this._initTimers();
     }
@@ -231,16 +237,16 @@ class Client extends events.EventEmitter {
     }
 
     /**
-     * Fetch friend count
+     * Fetch friend request count
      * 
      * @return {Promise<number>}
      * @memberof Client
      */
     fetchFriendCount() {
-        return this.api.getFriendRequests().then((requests) => {
-            if (requests) {
-                this.friendRequests = requests;
-                this.emit('request-count', requests)
+        return this.api.getFriendCount().then((count) => {
+            if (count) {
+                this.friendRequestCount = count;
+                this.emit('request-count', count);
             }
         });
     }

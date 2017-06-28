@@ -158,6 +158,7 @@ class Client extends events.EventEmitter {
      * Initialise timers to send fetch requests.
      * This keeps the notification/friend requests and counts
      * up to date. This Should only be used internally.
+     * 
      * @memberof Client
      */
     _initTimers() {
@@ -186,10 +187,11 @@ class Client extends events.EventEmitter {
     /**
      * Fetch all notification items
      * 
+     * @return {Promise<Array<Notification>>}
      * @memberof Client
      */
     fetchNotifications() {
-        this.api.getNotifications().then((notifications) => {
+        return this.api.getNotifications().then((notifications) => {
             if (notifications) {
                 this.notifications = notifications;
                 this.emit('notifications', notifications);
@@ -200,10 +202,11 @@ class Client extends events.EventEmitter {
     /**
      * Fetch notification count
      * 
+     * @return {Promise<number>}
      * @memberof Client
      */
     fetchNotificationCount() {
-        this.api.getActivityCount().then((count) => {
+        return this.api.getActivityCount().then((count) => {
             if (count) {
                 this.activityCount = count;
                 this.emit('activity-count', count);
@@ -214,10 +217,11 @@ class Client extends events.EventEmitter {
     /**
      * Fetch all friend requests
      * 
+     * @return {Promise<number>}
      * @memberof Client
      */
     fetchFriendRequests() {
-        this.api.getFriendRequests().then((requests) => {
+        return this.api.getFriendRequests().then((requests) => {
             if (requests) {
                 this.friendRequests = requests;
                 this.emit('friend-requests', requests);
@@ -228,10 +232,11 @@ class Client extends events.EventEmitter {
     /**
      * Fetch friend count
      * 
+     * @return {Promise<number>}
      * @memberof Client
      */
     fetchFriendCount() {
-        this.api.getFriendRequests().then((requests) => {
+        return this.api.getFriendRequests().then((requests) => {
             if (requests) {
                 this.friendRequests = requests;
                 this.emit('request-count', requests)

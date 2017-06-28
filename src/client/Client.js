@@ -11,36 +11,89 @@ const ClientUser = require('../structures/site/ClientUser');
 
 
 /**
- * The Game Jolt Client.
+ * The Game Jolt Client and main class.
+ * This provides access to chat and site api clients.
+ * 
  * @class Client
  * @extends {events.EventEmitter}
  */
 class Client extends events.EventEmitter {
 
+
     /**
+     * Creates an instance of Client.
      * 
-     * options:
-     * - countInterval - Interval to request friend and notification count
-     * - friendRequestInterval - Interval to accept friend requests
-     * 
-     * @param {any} options Client options
+     * @param {any} options client options
+     * @param {number} [options.countInterval=300] Interval to request friend and notification count
+     * @param {number} [options.friendRequestInterval=180] Interval to fetch friend requests
      * 
      * @constructor
+     * 
+     * @memberof Client
      */
-    constructor(options) {
+    constructor(options = {}) {
         super();
-        options = options || {};
-        
+
+        /**
+         * The client username
+         * @type {string}
+         */
         this.username = null;
+
+        /**
+         * Timestamp of client start
+         * @type {number}
+         */
         this.startTime = null;
+
+        /**
+         * Instance of current Client user
+         * @type {ClientUser}
+         */
         this.clientUser = null;
+
+        /**
+         * Game Jolt activity count
+         * @type {number}
+         */
         this.activityCount = 0;
+
+        /**
+         * Contains user friend requests
+         * @type {Array<FriendRequest>}
+         */
         this.friendRequests = [];
+
+        /**
+         * Contains user notifications and site activity
+         * @type {Array<Notification>}
+         */
         this.notifications = [];
+
+        /**
+         * Interval to request friend and notification counts
+         * @type {number}
+         */
         this.countInterval = options.countInterval ? options.countInterval : 300;
+
+        /**
+         * Interval to fetch friend requests
+         * @type {number}
+         */
         this.friendRequestInterval = options.friendRequestInterval ? options.friendRequestInterval : 180;
+
+        /**
+         * Site API client
+         * @type {SiteAPIManager}
+         */
         this.api = new SiteAPIManager(this);
+
+        /**
+         * Primus manager. This is used to connect to the chat
+         * @type {PrimusManager}
+         */
         this.primus = new PrimusManager(this);
+
         this._initTimers();
     }
 
@@ -56,8 +109,9 @@ class Client extends events.EventEmitter {
     }
 
     /**
-     * Login to Game Jolt account.
-     * Requires the username and password currently
+     * Login to Game Jolt account and establish connection
+     * to Game Jolt chat. Requires Game Jolt username and password.
+     * 
      * @param {string} username Game Jolt username
      * @param {string} password Game Jolt password
      * 
@@ -97,7 +151,15 @@ class Client extends events.EventEmitter {
             instance.client.chat.logout();
         });
     }
-
+    
+    
+    /**
+     * 
+     * Initialise timers to send fetch requests.
+     * This keeps the notification/friend requests and counts
+     * up to date. This Should only be used internally.
+     * @memberof Client
+     */
     _initTimers() {
         setInterval(() => { this.fetchNotificationCount() }, this.countInterval * 1000);
         setInterval(() => { this.fetchFriendCount() }, this.countInterval * 1000);
@@ -106,6 +168,9 @@ class Client extends events.EventEmitter {
 
     /**
      * Initialise the chat client
+     * Generally this should only be needed to be used
+     * internally by the client
+     * 
      * @param {string} server The chat server endpoint
      * @param {string} frontend The session cookie
      * 
@@ -173,6 +238,30 @@ class Client extends events.EventEmitter {
             }
         });
     }
+
+    /**
+     * Emitted when friend request counts have been fetched 
+     * @event event#request-count
+     * @memberof Client
+     */
+
+    /**
+     * Emitted when friend requests have been fetched 
+     * @event event#friend-requests
+     * @memberof Client
+     */
+
+    /**
+     * Emitted when notifications have been fetched
+     * @event event#notifications
+     * @memberof Client
+     */
+
+    /**
+     * Emitted when site activity data has been fetched
+     * @event event#activity
+     * @memberof Client
+     */
 }
 
 module.exports = Client;

@@ -1,6 +1,6 @@
 {
   "name": "gamejolt.js",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "This is a client for interacting with the Game Jolt site API and chat",
   "main": "./src/index",
   "types": "./typings/index.d.ts",

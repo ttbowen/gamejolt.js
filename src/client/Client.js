@@ -100,6 +100,7 @@ class Client extends events.EventEmitter {
 
     /**
      * Return the chat client
+     * Used as an alias for this.primus 
      * @readonly
      * 
      * @memberof Client
@@ -247,18 +248,21 @@ class Client extends events.EventEmitter {
     /**
      * Emitted when friend request counts have been fetched 
      * @event event#request-count
+     * @param {number}
      * @memberof Client
      */
 
     /**
      * Emitted when friend requests have been fetched 
      * @event event#friend-requests
+     * @param {Array<FriendRequest>}
      * @memberof Client
      */
 
     /**
      * Emitted when notifications have been fetched
      * @event event#notifications
+     * @param {Array<Notification>}
      * @memberof Client
      */
 

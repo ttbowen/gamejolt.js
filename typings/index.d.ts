@@ -376,6 +376,7 @@ declare module 'gamejolt.js' {
         public eventManager: EventManager;
         public socket: Socket;
         public spark: any;
+        public readonly uptime: number;
 
         public connect(server: string, frontend: string): void;
         public reconnect(): void;

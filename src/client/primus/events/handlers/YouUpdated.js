@@ -16,15 +16,7 @@ class YouUpdatedHandler extends Handler {
 
         client.chat.me = user;
         
-        const data = new YouUpdatedPayload({ old: oldUser, updated: user });
-        client.emit(Events.YOU_UPDATED, data);
-    }
-}
-
-class YouUpdatedPayload {
-    constructor(data) {
-        this.old = data.old;
-        this.updated = data.updated;
+        client.emit(Events.YOU_UPDATED, olduser, user);
     }
 }
 

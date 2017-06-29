@@ -16,17 +16,8 @@ class FriendUpdatedHandler extends Handler {
             const oldUser = cloneObject(client.chat.friends.get(user.id));
 
             client.chat.friends.update(user);
-
-            const data = new FriendUpdatedPayload({ old: oldUser, updated: user })
-            client.emit(Events.FRIEND_UPDATED, data);
+            client.emit(Events.FRIEND_UPDATED, oldUser, user);
         }
-    }
-}
-
-class FriendUpdatedPayload {
-    constructor(data) {
-        this.oldUser = data.oldUser;
-        this.updated = data.updated;
     }
 }
 

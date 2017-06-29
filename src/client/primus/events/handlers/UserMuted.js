@@ -20,17 +20,13 @@ class UserMutedHandler extends Handler {
             if (room && client.chat.isGroupRoom(room)) {
                 client.chat.usersOnline[roomId].mute(userId, isGlobal);
             }
-            const data = new UserMutedPayload({ userId: userId, user: user, roomId: roomId });
-            client.emit(Events.USER_MUTED,data);
-        }
-    }
-}
 
-class UserMutedPayload {
-    constructor(data) {
-        this.userId = data.userId;
-        this.user = data.user;
-        this.roomId = data.roomId;
+            if (user) {
+                client.emit(Events.USER_MUTED, userId, roomId, user);
+            } else {
+                client.emit(Events.USER_MUTED, userId, roomId);
+            }
+        }
     }
 }
 

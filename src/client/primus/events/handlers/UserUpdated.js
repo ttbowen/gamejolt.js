@@ -20,16 +20,8 @@ class UserUpdatedHandler extends Handler {
             if (chat.joinedRooms[roomId] && chat.isGroupRoom(chat.joinedRooms[roomId])) {
                 chat.usersOnline[roomId].update(user);
             }
-            const data = new UserUpdatedPayload({ old: oldUser, updated: user });
-            client.emit(Events.USER_UPDATED, data);
+            client.emit(Events.USER_UPDATED, old, user);
         }
-    }
-}
-
-class UserUpdatedPayload {
-    constructor(data) {
-        this.old = data.oldUser;
-        this.updated = data.updated;
     }
 }
 

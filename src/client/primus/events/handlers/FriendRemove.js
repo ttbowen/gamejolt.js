@@ -18,23 +18,13 @@ class FriendRemoveHandler extends Handler {
             if (user) {
                 const removed = cloneObject(user);
                 client.chat.leaveRoom(user.roomId);
-                
-                const data = new FriendRemovePayload({ userId: userId, removed: removed });
-                client.emit(Events.FRIEND_REMOVE, data);
+                client.emit(Events.FRIEND_REMOVE, userId, removed);
             } 
             else {
-                const data = new FriendRemovePayload({ userId: userId, removed: null });
-                client.emit(Events.FRIEND_REMOVE, data);
+                client.emit(Events.FRIEND_REMOVE, userId);
             }
             client.chat.friends.remove(userId);
         }
-    }
-}
-
-class FriendRemovePayload {
-    constructor(data) {
-        this.userId = data.userId;
-        this.friendRemoved = data.removed;
     }
 }
 

@@ -19,17 +19,13 @@ class UserLeaveHandler extends Handler {
             if (chat.joinedRooms[roomId] && chat.isGroupRoom(chat.joinedRooms[roomId])) {
                 chat.usersOnline[roomId].remove(userId);
             }
-            const data = new UserLeavePayload({ userId: userId, user: user, roomId: roomId });
-            client.emit(Events.USER_LEAVE_ROOM, data);
-        } 
-    }
-}
 
-class UserLeavePayload {
-    constructor(data) {
-        this.userId = data.userId;
-        this.user = data.user;
-        this.roomId = data.roomId;
+            if (user) {
+                client.emit(Events.USER_LEAVE_ROOM, userId, roomId, user);
+            } else {
+                client.emit(Events.USER_LEAVE_ROOM, userId, roomId);
+            }
+        } 
     }
 }
 

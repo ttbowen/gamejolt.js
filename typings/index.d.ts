@@ -313,23 +313,23 @@ declare module 'gamejolt.js' {
         public on(event: 'connected', listener: (user: User) => void): this;
         public on(event: 'message', listener: (message: Message) => void): this;
         public on(event: 'message-cleared', listener: (data: any) => void): this;
-        public on(event: 'friend-offline', listener: (friend: User) => void): this;
+        public on(event: 'friend-offline', listener: (userId: number, friend: User) => void): this;
         public on(event: 'friend-online', listener: (friend: User) => void): this;
         public on(event: 'friend-add', listener: (friend: User) => void): this;
-        public on(event: 'friend-remove', listener: (data: FriendRemovePayload) => void): this;
+        public on(event: 'friend-remove', listener: (userId: number, removed?: User) => void): this;
         public on(event: 'online-count', listener: (count: number) => void): this;
-        public on(event: 'friends-list', listener: (count: UserCollection) => void): this;
-        public on(event: 'user-enter-room', listener: (data: UserEnterPayload) => void): this;
-        public on(event: 'user-leave-room', listener: (data: UserLeavePayload) => void): this;
-        public on(event: 'friend-updated', listener: (data: FriendUpdatedPayload) => void): this;
+        public on(event: 'friends-list', listener: (friends: UserCollection) => void): this;
+        public on(event: 'user-enter-room', listener: (roomId: number, user: User) => void): this;
+        public on(event: 'user-leave-room', listener: (userId: number, roomId: number, user?: User) => void): this;
+        public on(event: 'friend-updated', listener: (oldUser: User, user: User) => void): this;
         public on(event: 'role-set', listener: (data: any) => void): this;
-        public on(event: 'user-muted', listener: (data: UserMutedPayload) => void): this;
-        public on(event: 'user-unmuted', listener: (data: UserUnmutedPayload) => void): this;
-        public on(event: 'user-updated', listener: (data: UserUpdatedPayload) => void): this;
-        public on(event: 'notification', listener: (data: any) => void): this;
+        public on(event: 'user-muted', listener: (userId: number, roomId: number, isGlobal: boolean, user?: User) => void): this;
+        public on(event: 'user-unmuted', listener: (userId: number, roomId: number, isGlobal: boolean, user?: User) => void): this;
+        public on(event: 'user-updated', listener: (oldUser: User, user: User) => void): this;
+        public on(event: 'notification', listener: (data: Message | object) => void): this;
         public on(event: 'prime-chatroom', listener: (data: any) => void): this;
         public on(event: 'public-rooms', listener: (rooms: Room[]) => void): this;
-        public on(event: 'you-updated', listener: (data: YouUpdatedPayload) => void): this;
+        public on(event: 'you-updated', listener: (oldUser: User, user: User) => void): this;
         public on(event: 'you-leave-room', listener: (data: any) => void): this;
     }
 
@@ -418,63 +418,6 @@ declare module 'gamejolt.js' {
         public mod(input: any): void;
         public demod(input: any): void;
         public getByRoom(input: any): any;
-    }
-
-    class FriendRemovePayload {
-        constructor(data: any);
-
-        public userId: number;
-        public friendRemoved: User;
-    }
-
-    class FriendUpdatedPayload {
-        constructor(data: any);
-
-        public oldUser: User;
-        public updated: User;
-    }
-
-    class UserEnterPayload {
-        constructor(data: any);
-
-        public user: User;
-        public roomId: number;
-    }
-
-    class UserLeavePayload {
-        constructor(data: any);
-
-        public userId: number;
-        public user: User;
-        public roomId: number;
-    }
-
-    class UserMutedPayload {
-        constructor(data: any);
-
-        public userId: number;
-        public user: User;
-        public roomId: number;
-    }
-
-    class UserUnmutedPayload {
-        constructor(data: any);
-
-        public userId: number;
-        public user: User;
-        public roomId: number;
-    }
-
-    class UserUpdatedPayload {
-        constructor(data: any);
-        public old: User;
-        public updated: User;
-    }
-
-    class YouUpdatedPayload {
-        constructor(data: any);
-        public old: User;
-        public updated: User;
     }
 
     type PublicRooms = {

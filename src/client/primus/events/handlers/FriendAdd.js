@@ -9,7 +9,7 @@ class FriendAddHandler extends Handler {
 
     handle(payload) {
         const client = this.eventManager.client;
-        const newFriend payload.data.user;
+        const newFriend = payload.data.user;
 
         if (client.chat.friends) {
             client.chat.friends.add(newFriend);

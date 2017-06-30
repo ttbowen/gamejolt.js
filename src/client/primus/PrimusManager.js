@@ -151,7 +151,10 @@ class PrimusManager extends events.EventEmitter {
         if (message === '')
             return;
 
-        if(!this.rateLimiter[roomId]) this.rateLimiter[roomId] = new RateLimiter(5, 60);
+        if(!this.rateLimiter[roomId]) {
+            this.rateLimiter[roomId] = new RateLimiter(this.client.rateLimitRequests, 
+            this.client.rateLimitDuration);
+        }
 
         if (!this.rateLimiter[roomId].throttle()) {
             this.socket.write({

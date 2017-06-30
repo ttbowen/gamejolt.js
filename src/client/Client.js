@@ -99,6 +99,18 @@ class Client extends events.EventEmitter {
          * @type {number}
          */
         this.friendRequestCount = 0;
+        
+        /**
+         * Requests per interval for rate limiting.
+         * @type {number}
+         */
+        this.rateLimitRequests = options.rateLimitRequests || 1;
+        
+        /**
+         * Rate limit duration.
+         * @type {number}
+         */
+        this.rateLimitDuration = options.rateLimitDuration || 1;
 
         this._initTimers();
     }

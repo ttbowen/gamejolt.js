@@ -8,6 +8,7 @@ const Events = require('../../../../util/Events').Events;
 class UserUnmutedHandler extends Handler {
 
     handle(payload) {
+
         const client = this.eventManager.client;
         const userId = payload.data.userId;
         const roomId = payload.data.roomId;
@@ -22,9 +23,9 @@ class UserUnmutedHandler extends Handler {
             }
             
             if (user) {
-                client.emit(Events.USER_UNMUTED, userId, roomId, new User(client, user));
+                client.emit(Events.USER_UNMUTED, userId, roomId, isGlobal, new User(client, user));
             } else {
-                client.emit(Events.USER_UNMUTED, userId, roomId);
+                client.emit(Events.USER_UNMUTED, userId, roomId, isGlobal);
             }
         }
     }

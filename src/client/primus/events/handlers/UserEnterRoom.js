@@ -16,7 +16,7 @@ class UserEnterHandler extends Handler {
         if(chat.joinedRooms[roomId] && chat.isGroupRoom(chat.joinedRooms[roomId])) {
             chat.usersOnline[roomId].add(user);
         }
-        client.emit(Events.USER_ENTER_ROOM, userId, roomId, new User(client, user));
+        client.emit(Events.USER_ENTER_ROOM, roomId, new User(client, user));
     }
 }
 

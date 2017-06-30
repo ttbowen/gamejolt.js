@@ -11,11 +11,14 @@ class PublicRoomsHandler extends Handler {
         const client = this.eventManager.client;
         const rooms = payload.data.rooms;
 
+        const publicRooms = [];
+
         for (let room in rooms) {
-            let r = rooms[room];
-            client.chat.publicRooms.push(new Room(r));
+            let newRoom = new Room(rooms[room]);
+            publicRooms.push(newRoom);
         }
-        client.emit(Events.PUBLIC_ROOMS, rooms);
+        client.chat.publicRooms = publicRooms;
+        client.emit(Events.PUBLIC_ROOMS, publicRooms);
     }
 }
 

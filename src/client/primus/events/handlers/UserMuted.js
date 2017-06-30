@@ -22,7 +22,7 @@ class UserMutedHandler extends Handler {
             }
 
             if (user) {
-                client.emit(Events.USER_MUTED, userId, roomId, user);
+                client.emit(Events.USER_MUTED, userId, roomId, new User(client, user));
             } else {
                 client.emit(Events.USER_MUTED, userId, roomId);
             }

@@ -21,7 +21,7 @@ class UserLeaveHandler extends Handler {
             }
 
             if (user) {
-                client.emit(Events.USER_LEAVE_ROOM, userId, roomId, user);
+                client.emit(Events.USER_LEAVE_ROOM, userId, roomId, new User(client, user));
             } else {
                 client.emit(Events.USER_LEAVE_ROOM, userId, roomId);
             }

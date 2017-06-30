@@ -22,7 +22,7 @@ class UserUnmutedHandler extends Handler {
             }
             
             if (user) {
-                client.emit(Events.USER_UNMUTED, userId, roomId, user);
+                client.emit(Events.USER_UNMUTED, userId, roomId, new User(client, user));
             } else {
                 client.emit(Events.USER_UNMUTED, userId, roomId);
             }

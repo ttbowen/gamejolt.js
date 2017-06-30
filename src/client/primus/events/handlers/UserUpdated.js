@@ -20,7 +20,7 @@ class UserUpdatedHandler extends Handler {
             if (chat.joinedRooms[roomId] && chat.isGroupRoom(chat.joinedRooms[roomId])) {
                 chat.usersOnline[roomId].update(user);
             }
-            client.emit(Events.USER_UPDATED, old, user);
+            client.emit(Events.USER_UPDATED, new User(client, old), new User(client, user));
         }
     }
 }

@@ -9,12 +9,12 @@ class FriendOnlineHandler extends Handler {
 
     handle(payload) {
         const client = this.eventManager.client;
-        const user = new User(payload.data.user);
+        const user = payload.data.user;
 
         if (client.chat.friends) {
             client.chat.friends.online(user);
         }
-        client.emit(Events.FRIEND_ONLINE, user);
+        client.emit(Events.FRIEND_ONLINE, new User(client, user));
     }
 }
 

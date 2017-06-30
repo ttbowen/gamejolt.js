@@ -13,9 +13,9 @@ class FriendOfflineHandler extends Handler {
 
         if (client.chat.friends) {
             const user = client.chat.friends.get(userId);
-
+            
             client.chat.friends.offline(userId);
-            client.emit(Events.FRIEND_OFFLINE, user);
+            client.emit(Events.FRIEND_OFFLINE, userId, new User(user));
         }
     }
 }

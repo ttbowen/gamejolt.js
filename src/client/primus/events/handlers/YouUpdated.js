@@ -11,12 +11,12 @@ class YouUpdatedHandler extends Handler {
     handle(payload) {
 
         const client = this.eventManager.client;
-        const user = new User(client, payload.data.user);
+        const user = payload.data.user;
         const oldUser = cloneObject(client.chat.me);
 
-        client.chat.me = user;
+        client.chat.me = new User(client, user);
         
-        client.emit(Events.YOU_UPDATED, olduser, user);
+        client.emit(Events.YOU_UPDATED, new User(client, olduser), new User(client, user));
     }
 }
 

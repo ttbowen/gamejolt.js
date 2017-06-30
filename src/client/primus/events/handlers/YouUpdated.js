@@ -16,7 +16,7 @@ class YouUpdatedHandler extends Handler {
 
         client.chat.me = new User(client, user);
         
-        client.emit(Events.YOU_UPDATED, new User(client, olduser), new User(client, user));
+        client.emit(Events.YOU_UPDATED, new User(client, oldUser), new User(client, user));
     }
 }
 

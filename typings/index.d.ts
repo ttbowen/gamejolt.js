@@ -421,9 +421,9 @@ declare module 'gamejolt.js' {
     }
 
     type PublicRooms = {
-        Lobby?: number;
-        Development?: number;
-        Letsplay?: number;
+        lobby?: number;
+        development?: number;
+        letsplay?: number;
         fangames?: number;
         espanol?: number;
     }

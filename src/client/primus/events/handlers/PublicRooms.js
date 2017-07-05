@@ -14,7 +14,7 @@ class PublicRoomsHandler extends Handler {
         const publicRooms = [];
 
         for (let room in rooms) {
-            let newRoom = new Room(rooms[room]);
+            let newRoom = new Room(client, rooms[room]);
             publicRooms.push(newRoom);
         }
         client.chat.publicRooms = publicRooms;

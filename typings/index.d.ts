@@ -378,6 +378,16 @@ declare module 'gamejolt.js' {
         public spark: any;
         public readonly uptime: number;
 
+        public startTime: number;
+        public me: User;
+        public isConnected: boolean;
+        public friends: UserCollection;
+        public joinedRooms: any;
+        public usersOnline: any;
+        public messages: any;
+        public userCount: number;
+        public publicRooms: Room[];
+
         public connect(server: string, frontend: string): void;
         public reconnect(): void;
         public resetClient(): void;

@@ -18,7 +18,7 @@ class FriendRemoveHandler extends Handler {
             if (user) {
                 const removed = cloneObject(user);
                 client.chat.leaveRoom(user.roomId);
-                client.emit(Events.FRIEND_REMOVE, userId, new User(removed));
+                client.emit(Events.FRIEND_REMOVE, userId, new User(client, removed));
             } 
             else {
                 client.emit(Events.FRIEND_REMOVE, userId);

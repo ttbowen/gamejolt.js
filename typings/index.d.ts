@@ -344,7 +344,7 @@ declare module 'gamejolt.js' {
         public logout(): Promise<any>;
         public discover(): Promise<any>;
         public getChat(): Promise<string>;
-        public getUser(username: string): Promise<SiteUser>;
+        public getUser(username: string|number): Promise<SiteUser>;
         public getGame(gameId: number): Promise<Game>;
         public getGameOverview(gameId: number): Promise<GameOverview>;
         public getActivityCount(): Promise<number>;

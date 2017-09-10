@@ -62,6 +62,7 @@ class PrimusManager extends events.EventEmitter {
 
         this.socket.on('data', (msg) => { this._processMessage(msg); });
         this.socket.on('error', (error) => { });
+        this.socket.on('reconnected', () => { this.resetClient(); });
     }
 
     /**

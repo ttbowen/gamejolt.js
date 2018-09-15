@@ -1,17 +1,16 @@
 'use strict';
 
+const Client = require('../../../client/Client'); // eslint-disable-line no-unused-vars
 const Events = require('../../../util/Events').Events;
 
 /**
- * Game Jolt Chat event manager
+ * Game Jolt Chat event manager.
  * @class EventManager
  */
 class EventManager {
   /**
    * Creates an instance of EventManager.
-   *
-   * @param {Client} client The Gme Jolt client
-   *
+   * @param {Client} client The client instance.
    * @constructor
    */
   constructor(client) {
@@ -42,11 +41,9 @@ class EventManager {
   }
 
   /**
-   * Register a new event
-   *
-   * @param {string} event The event name
-   * @param {string} handle The event handler name
-   *
+   * Register a new event.
+   * @param {string} event The event name.
+   * @param {string} handle The event handler name.
    * @memberof EventManager
    */
   register(event, handle) {
@@ -54,6 +51,11 @@ class EventManager {
     this.handlers[event] = new Handler(this);
   }
 
+  /**
+   * Handle the event.
+   * @param {*} data The event data.
+   * @memberof EventManager
+   */
   handle(data) {
     if (this.handlers[data.event])
       return this.handlers[data.event].handle(data);

@@ -1,6 +1,5 @@
 /**
- *
- * Chat configurations
+ * Contains chat configurations.
  */
 exports.ChatConfig = {
   ROOM_PM: 'pm',

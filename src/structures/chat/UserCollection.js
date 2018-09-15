@@ -3,15 +3,13 @@
 const _ = require('lodash');
 
 /**
- * Represents a user collection
+ * Represents a user collection.
  * @class UserCollection
  */
 class UserCollection {
   /**
    * Creates an instance of UserCollection.
-   *
-   * @param {any} users User collection object
-   *
+   * @param {*} users An array of users.
    * @constructor
    */
   constructor(users) {
@@ -22,7 +20,7 @@ class UserCollection {
   }
 
   /**
-   * Get the user collection
+   * Get the user collection.
    * @readonly
    */
   get users() {
@@ -30,10 +28,8 @@ class UserCollection {
   }
 
   /**
-   *
-   * Populate the collection
-   * @param {any} users The user collection
-   *
+   * Populate the collection.
+   * @param {*} users The user collection.
    * @memberof UserCollection
    */
   populate(users) {
@@ -50,10 +46,9 @@ class UserCollection {
   }
 
   /**
-   * Get a user from collection
-   * @param {any} input The user or user Id
-   * @returns {any}
-   *
+   * Get a user from collection.
+   * @param {number|Object} input The user or user Id.
+   * @returns {*} The user object in collection.
    * @memberof UserCollection
    */
   get(input) {
@@ -62,10 +57,9 @@ class UserCollection {
   }
 
   /**
-   * Check if user is in collection
-   * @param {any} input
+   * Check if user is in collection.
+   * @param {*} input
    * @returns {boolean}
-   *
    * @memberof UserCollection
    */
   has(input) {
@@ -73,9 +67,8 @@ class UserCollection {
   }
 
   /**
-   * Add a new user to collection
-   * @param {any} user The user to add
-   *
+   * Add a new user to collection.
+   * @param {*} user The user to add.
    * @memberof UserCollection
    */
   add(user) {
@@ -88,9 +81,8 @@ class UserCollection {
   }
 
   /**
-   * Remove a user from collection
-   * @param {any} user The user to remove
-   *
+   * Remove a user from collection.
+   * @param {*} user The user to remove.
    * @memberof UserCollection
    */
   remove(user) {
@@ -104,9 +96,8 @@ class UserCollection {
   }
 
   /**
-   * Update a user in collection
-   * @param {any} user The user to update
-   *
+   * Update a user in collection.
+   * @param {*} user The user to update.
    * @memberof UserCollection
    */
   update(user) {
@@ -115,9 +106,8 @@ class UserCollection {
   }
 
   /**
-   * Change a users status to online
-   * @param {any} input
-   *
+   * Change a users status to online.
+   * @param {*} input
    * @memberof UserCollection
    */
   online(input) {
@@ -134,9 +124,8 @@ class UserCollection {
   }
 
   /**
-   * Change a users status to offline
-   * @param {any} input
-   *
+   * Change a users status to offline.
+   * @param {*} input
    * @memberof UserCollection
    */
   offline(input) {
@@ -151,10 +140,9 @@ class UserCollection {
   }
 
   /**
-   * Change a users status to muted
-   * @param {any} input The user to mute
-   * @param {boolean} isGlobal Is a global mute
-   *
+   * Change a users status to muted.
+   * @param {*} input The user to mute.
+   * @param {boolean} isGlobal Whether this is a global mute.
    * @memberof UserCollection
    */
   mute(input, isGlobal) {
@@ -169,10 +157,9 @@ class UserCollection {
   }
 
   /**
-   * Change a users status to unmuted
-   * @param {any} input The user to unmute
-   * @param {boolean} isGlobal Is a global unmute
-   *
+   * Change a users status to unmuted.
+   * @param {*} input The user to unmute.
+   * @param {boolean} isGlobal Whether this is a global unmute.
    * @memberof UserCollection
    */
   unmute(input, isGlobal) {
@@ -187,10 +174,9 @@ class UserCollection {
   }
 
   /**
-   * Change a user to room moderator status
-   * @param {any} input The user to mod
-   *
-   * @memberOf UserCollection
+   * Change a user to room 'moderator' status.
+   * @param {*} input The user to make mod.
+   * @memberof UserCollection
    */
   mod(input) {
     let user = this.get(input);
@@ -202,9 +188,8 @@ class UserCollection {
   }
 
   /**
-   * Remove a users moderator status
-   * @param {any} input The user to demod
-   *
+   * Remove a users 'moderator' status.
+   * @param {*} input The user to demod.
    * @memberof UserCollection
    */
   demod(input) {
@@ -216,6 +201,12 @@ class UserCollection {
     this.update(user);
   }
 
+  /**
+   * Get a user by room.
+   * @param {number|Object} input The room id or object.
+   * @returns {*} The user in passed room.
+   * @memberof UserCollection
+   */
   getByRoom(input) {
     let roomId = typeof input === 'number' ? input : input.id;
     return _.find(this.collection, { roomId: roomId });

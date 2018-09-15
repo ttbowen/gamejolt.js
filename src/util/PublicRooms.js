@@ -1,6 +1,5 @@
 /**
- *
- * Predefined Room Ids for public rooms
+ * Predefined Room Ids for public rooms.
  */
 exports.PublicRooms = {
   lobby: 2,

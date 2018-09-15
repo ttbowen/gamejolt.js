@@ -1,32 +1,31 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
 const SiteUser = require('./SiteUser');
 const ProfileEdit = require('../../client/api/payloads/ProfileEdit');
 const EmailEdit = require('../../client/api/payloads/EmailEdit');
 
 /**
- * Represents the Client user
+ * Represents the Client user.
  * @class ClientUser
+ * @extends {SiteUser}
  */
 class ClientUser extends SiteUser {
   /**
    * Creates an instance of ClientUser.
-   *
-   * @param {Client} client The Game Jolt client
-   * @param {any} data The user data
-   *
-   * @constructor
+   * @param {Client} client The client instance.
+   * @param {*} data The client user payload.s
+   * @memberof ClientUser
    */
   constructor(client, data) {
     super(client, data);
   }
 
   /**
-   * Set a new password
-   * @param {string} oldPassword
-   * @param {string} newPassword
+   * Set a new password.
+   * @param {string} oldPassword The old user password.
+   * @param {string} newPassword The new user password.
    * @returns {Promise}
-   *
    * @memberof ClientUser
    */
   setPassword(oldPassword, newPassword) {
@@ -42,10 +41,9 @@ class ClientUser extends SiteUser {
   }
 
   /**
-   * Set a new email
-   * @param {string} email
+   * Set a new email address.
+   * @param {string} email The email address to set.
    * @returns {Promise}
-   *
    * @memberof ClientUser
    */
   setEmail(email) {
@@ -66,10 +64,9 @@ class ClientUser extends SiteUser {
   }
 
   /**
-   * Set a new username
-   * @param {string} username
+   * Set a new username.
+   * @param {string} username The username to set.
    * @returns {Promise}
-   *
    * @memberof ClientUser
    */
   setUsername(username) {
@@ -90,10 +87,9 @@ class ClientUser extends SiteUser {
   }
 
   /**
-   * Set a new display name
-   * @param {string} name
+   * Set a new display name.
+   * @param {string} name The display name to set.
    * @returns {Promise}
-   *
    * @memberof ClientUser
    */
   setNickname(name) {
@@ -114,10 +110,9 @@ class ClientUser extends SiteUser {
   }
 
   /**
-   * Set a new profile bio
-   * @param {string} content
+   * Set a new profile bio.
+   * @param {string} content The content of the bio.
    * @returns {Promise}
-   *
    * @memberof ClientUser
    */
   setBio(content) {

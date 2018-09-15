@@ -6,17 +6,23 @@ const Moment = require('moment');
 
 const Socket = Primus.createSocket({ transformer: 'engine.io' });
 
+const Client = require('../Client'); // eslint-disable-line no-unused-vars
 const RateLimiter = require('./RateLimiter');
 const EventManager = require('./events/EventManager');
 const ChatConfig = require('../../util/ChatConfig').ChatConfig;
 
 /**
  * Primus client.
- * Handles primus connection and primus events
+ * This handles and maintains the primus connection and primus events.
  * @class PrimusManager
  * @extends {events.EventEmitter}
  */
 class PrimusManager extends events.EventEmitter {
+  /**
+   * Creates an instance of PrimusManager.
+   * @param {Client} client The client instance.
+   * @memberof PrimusManager
+   */
   constructor(client) {
     super();
     this.client = client;
@@ -28,9 +34,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Return primus uptime
+   * Return primus uptime.
    * @readonly
-   *
    * @memberof PrimusManager
    */
   get uptime() {
@@ -38,10 +43,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Connects to the chat server
-   * @param {string} server
-   * @param {string} frontend
-   *
+   * Connects to the chat server.
+   * @param {string} server The url of the primus server.
+   * @param {string} frontend The frontend cookie.
    * @memberof PrimusManager
    */
   connect(server, frontend) {
@@ -68,8 +72,7 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Reconnect to the chat when disconnected
-   *
+   * Reconnect to the chat when disconnected.
    * @memberof PrimusManager
    */
   reconnect() {
@@ -82,8 +85,7 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Reset the primus client
-   *
+   * Reset the primus client.
    * @memberof PrimusManager
    */
   resetClient() {
@@ -105,9 +107,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Set the passed cookie
-   * @param {string} cookie
-   *
+   * Set the passed cookie.
+   * @param {string} cookie The cookie to set.
    * @memberof PrimusManager
    */
   setCookie(cookie) {
@@ -118,9 +119,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Enter the passed room
-   * @param {number} roomId
-   *
+   * Enter the passed room.
+   * @param {number} roomId The identifier of the room to enter.
    * @memberof PrimusManager
    */
   enterRoom(roomId) {
@@ -131,9 +131,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Leave the passed room
-   * @param {number} roomId
-   *
+   * Leave the passed room.
+   * @param {number} roomId The identifier of the room to leave.
    * @memberof PrimusManager
    */
   leaveRoom(roomId) {
@@ -144,10 +143,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Send a chat message to passed room
-   * @param {string} message
-   * @param {number} roomId
-   *
+   * Send a chat message.
+   * @param {string} message The content of the message.
+   * @param {number} roomId The identifier of the room to message.
    * @memberof PrimusManager
    */
   sendMessage(message, roomId) {
@@ -170,10 +168,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Set a user to mod status in room
-   * @param {number} userId
-   * @param {number} roomId
-   *
+   * Set a user to 'moderator' status in room.
+   * @param {number} userId The identifier of the user to mod.
+   * @param {number} roomId The identifier of the room.
    * @memberof PrimusManager
    */
   mod(userId, roomId) {
@@ -185,10 +182,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Remove a users mod status in room
-   * @param {number} userId
-   * @param {number} roomId
-   *
+   * Remove a users 'moderator' status in room.
+   * @param {number} userId The identifier of the user to mod.
+   * @param {number} roomId The identifier of the room.
    * @memberof PrimusManager
    */
   demod(userId, roomId) {
@@ -200,10 +196,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Remove a message from the chat
-   * @param {number} msgId
-   * @param {number} roomId
-   *
+   * Remove a message from the chat.
+   * @param {number} msgId The identifier of the message to remove.
+   * @param {number} roomId The identifier of the room.
    * @memberof PrimusManager
    */
   messageRemove(msgId, roomId) {
@@ -215,10 +210,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Check if room is a pm room
-   * @param {any} room
+   * Check if room is a private room.
+   * @param {*} room The room object.
    * @returns {boolean}
-   *
    * @memberof PrimusManager
    */
   isPmRoom(room) {
@@ -228,10 +222,9 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Check if room is a group room
-   * @param {any} room
+   * Check if room is a group room.
+   * @param {*} room The room object.
    * @returns {boolean}
-   *
    * @memberof PrimusManager
    */
   isGroupRoom(room) {
@@ -245,9 +238,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Focus on events from room
-   * @param {number} roomId
-   *
+   * Focus on events from room.
+   * @param {number} roomId The identifier of the room.
    * @memberof PrimusManager
    */
   focus(roomId) {
@@ -258,9 +250,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Unfocus from room
-   * @param {number} roomId
-   *
+   * Unfocus from room.
+   * @param {number} roomId The identifier of the room.
    * @memberof PrimusManager
    */
   unFocus(roomId) {
@@ -271,9 +262,8 @@ class PrimusManager extends events.EventEmitter {
   }
 
   /**
-   * Log the chat message in console
-   * @param {Message} msg
-   *
+   * Log the chat message in console.
+   * @param {Message} msg The message to log.
    * @memberof PrimusManager
    */
   logMessage(msg) {

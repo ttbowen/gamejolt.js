@@ -1,21 +1,20 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
 const Compatibility = require('./Compatibility');
 const Developer = require('./SiteUser');
 const MediaItem = require('./MediaItem');
 const rating = require('../../util/TigrsRatings').tigrs;
 
 /**
- * Represents a Game Jolt game
+ * Represents a Game Jolt game.
  * @class Game
  */
 class Game {
   /**
    * Creates an instance of Game.
-   *
-   * @param {Client} client The Game Jolt client
-   * @param {any} data The game data
-   *
+   * @param {Client} client The client instance.
+   * @param {*} data The game payload.
    * @constructor
    */
   constructor(client, data) {

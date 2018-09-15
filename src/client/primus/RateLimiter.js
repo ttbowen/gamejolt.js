@@ -1,31 +1,26 @@
 'use strict';
 
 /**
- *
- * Ratelimits client messages
- * Implements leaky bucket algorithm
+ * Ratelimits client messages.
+ * Implements leaky bucket algorithm.
  * @class RateLimiter
  */
 class RateLimiter {
   /**
    * Creates an instance of RateLimiter.
-   *
-   * @param {number} n Number of requests
-   * @param {number} t Timestamp
-   *
+   * @param {number} requestsNum Number of requests
+   * @param {number} timestamp Timestamp
    * @constructor
    */
-  constructor(n, t) {
-    this.requestCount = n;
-    this.timestamp = t;
+  constructor(requestsNum, timestamp) {
+    this.requestCount = requestsNum;
+    this.timestamp = timestamp;
     this.seconds = 0;
   }
 
   /**
-   *
-   * Throttle messages
-   * @returns {boolean} returns true if throttled
-   *
+   * Throttle messages.
+   * @returns {boolean} returns true if throttled.
    * @memberof RateLimiter
    */
   throttle() {

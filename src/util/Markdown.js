@@ -1,6 +1,6 @@
 /**
- * Return bold markdown text
- * @param {string} text
+ * Return bold markdown text.
+ * @param {string} text The text to make bold.
  * @returns {string}
  */
 function bold(text) {
@@ -8,8 +8,8 @@ function bold(text) {
 }
 
 /**
- * Return underlined markdown text
- * @param {string} text
+ * Return underlined markdown text.
+ * @param {string} text The text to underline.
  * @returns {string}
  */
 function underline(text) {
@@ -17,8 +17,8 @@ function underline(text) {
 }
 
 /**
- * Return italic markdown text
- * @param {string} text
+ * Return italic markdown text.
+ * @param {string} text The text to make italic.
  * @returns {string}
  */
 function italic(text) {
@@ -26,9 +26,8 @@ function italic(text) {
 }
 
 /**
- *
- * Returns strikedout markdown text
- * @param {string} text
+ * Returns strikedout markdown text.
+ * @param {string} text The text to strikeout.
  * @returns {string}
  */
 function strikeout(text) {
@@ -36,8 +35,8 @@ function strikeout(text) {
 }
 
 /**
- * Add a @username mention
- * @param {string} username
+ * Add a @username mention.
+ * @param {string} username The username to mention.
  * @returns {string}
  */
 function addMention(username) {

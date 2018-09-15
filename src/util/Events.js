@@ -1,6 +1,5 @@
 /**
- *
- * All chat events are defined here
+ * All chat events are defined here.
  */
 exports.Events = {
   CONNECTED: 'connected',

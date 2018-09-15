@@ -2,20 +2,19 @@
 
 const User = require('./User');
 const Room = require('./Room');
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
 const ChatConfig = require('../../util/ChatConfig').ChatConfig;
 const Markdown = require('../../util/Markdown');
 
 /**
- * Represents a Game Jolt chat message
+ * Represents a Game Jolt chat message.
  * @class Message
  */
 class Message {
   /**
    * Creates an instance of Message.
-   *
-   * @param {Client} client The Game Jolt client
-   * @param {any} data The message data
-   *
+   * @param {Client} client The client instance.
+   * @param {*} data The message payload.
    * @constructor
    */
   constructor(client, data) {
@@ -38,9 +37,8 @@ class Message {
   }
 
   /**
-   * Reply to a chat message
-   * @param {string} content The message content
-   *
+   * Reply to a chat message.
+   * @param {string} content The message content.
    * @memberof Message
    */
   reply(content) {
@@ -58,10 +56,8 @@ class Message {
   }
 
   /**
-   *
-   * Check if the client user has been mentioned in message
+   * Check whether the client user has been mentioned in message.
    * @readonly
-   *
    * @memberof Message
    */
   get isMentioned() {

@@ -1,17 +1,17 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
+
 /**
- * Represents Compatibility Object
+ * Represents Compatibility Object.
  * @class Compatibility
  */
 class Compatibility {
   /**
    * Creates an instance of Compatibility.
-   *
-   * @param {Client} client Game Jolt client
-   * @param {any} data The compatibility data
-   *
-   * @constructor
+   * @param {Client} client The client instance.
+   * @param {*} data The compatibility payload.
+   * @memberof Compatibility
    */
   constructor(client, data) {
     this.client = client;

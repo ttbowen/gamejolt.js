@@ -1,5 +1,7 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
+
 /**
  * Represents a Game Jolt game overview
  * @class Game
@@ -7,10 +9,8 @@
 class GameOverview {
   /**
    * Creates an instance of GameOverview.
-   *
-   * @param {Client} client Game Jolt client
-   * @param {any} data The game overview data
-   *
+   * @param {Client} client The client instance.
+   * @param {*} data The game overview payload.
    * @constructor
    */
   constructor(client, data) {

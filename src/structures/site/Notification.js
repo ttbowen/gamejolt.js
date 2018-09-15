@@ -1,16 +1,16 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
+
 /**
- * Represents a site notification
+ * Represents a site notification.
  * @class Notification
  */
 class Notification {
   /**
    * Creates an instance of Notification.
-   *
-   * @param {Client} client The Game Jolt client
-   * @param {any} data The notification data
-   *
+   * @param {Client} client The client instance.
+   * @param {*} data The notification payload.
    * @constructor
    */
   constructor(client, data) {

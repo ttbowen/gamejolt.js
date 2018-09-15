@@ -3,6 +3,7 @@
 const axios = require('axios');
 const cookie = require('cookie');
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
 const endpoints = require('../../util/Endpoints').Endpoints;
 const UserProfile = require('../../structures/site/SiteUser');
 const FeaturedGame = require('../../structures/site/FeaturedGame');
@@ -13,16 +14,14 @@ const UserFriendship = require('../../structures/site/UserFriendship');
 const Notification = require('../../structures/site/Notification');
 
 /**
- * Handles Requests to the Game Jolt site API
+ * Handles requests to the Game Jolt site API.
  * @class SiteAPIManager
  */
 class SiteAPIManager {
   /**
    * Creates an instance of SiteAPIManager.
-   *
-   * @param {Client} client The Game Jolt client
-   *
-   * @constructor
+   * @param {Client} client The client instance.
+   * @memberof SiteAPIManager
    */
   constructor(client) {
     this.client = client;
@@ -43,9 +42,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get the frontend cookie
+   * Get the frontend cookie.
    * @readonly
-   *
    * @memberof SiteAPIManager
    */
   get frontend() {
@@ -53,9 +51,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get the base uri for site api
+   * Get the base uri for site api.
    * @readonly
-   *
    * @memberof SiteAPIManager
    */
   get base() {
@@ -73,11 +70,10 @@ class SiteAPIManager {
   }
 
   /**
-   * Authenticate the user
-   * @param {string} username Game Jolt username
-   * @param {string} password Game Jolt password
+   * Authenticate the user.
+   * @param {string} username Game Jolt username.
+   * @param {string} password Game Jolt password.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   auth(username, password) {
@@ -110,9 +106,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Logout from client as current user
+   * Logout from client as current user.
    * @returns {promise}
-   *
    * @memberof SiteAPIManager
    */
   logout() {
@@ -151,9 +146,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get all featured games on the homepage
-   * @returns Promise<FeaturedGame[]>
-   *
+   * Get all featured games on the homepage.
+   * @returns {Promise<FeaturedGame[]>}
    * @memberof SiteAPIManager
    */
   getFeatured() {
@@ -171,9 +165,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get the chat endpoint
+   * Get the chat endpoint.
    * @returns {Promise<string>}
-   *
    * @memberof SiteAPIManager
    */
   getChat() {
@@ -190,14 +183,13 @@ class SiteAPIManager {
   }
 
   /**
-   * Get a user with passed username or Id
-   * @param {string|number} u
+   * Get a user with passed username or Id.
+   * @param {string|number} user The user to get.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
-  getUser(u) {
-    const id = typeof u === 'number' ? u : `@${u}`;
+  getUser(user) {
+    const id = typeof u === 'number' ? user : `@${user}`;
 
     const url = `${this.base}${endpoints.profile(id)}`;
     const instance = this;
@@ -214,10 +206,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Get a game with passed game Id
-   * @param {number} gameId
+   * Get a game with passed game Id.
+   * @param {number} gameId The identifier of the game to get.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getGame(gameId) {
@@ -236,10 +227,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Get a games overview with passed game id
-   * @param {number} gameId
+   * Get a games overview with passed game id.
+   * @param {number} gameId The identifier of the game overview to get.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getGameOverview(gameId) {
@@ -258,9 +248,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get Activity Count
+   * Get the activity Count.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getActivityCount() {
@@ -278,9 +267,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get friend count
+   * Get friend count.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getFriendCount() {
@@ -298,9 +286,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Get all notifications
+   * Get all notifications.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getNotifications() {
@@ -328,9 +315,8 @@ class SiteAPIManager {
   }
 
   /**
-   * Gets all friend requests
+   * Gets all friend requests.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getFriendRequests() {
@@ -355,10 +341,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Gets a user friendship
-   * @param {string} username
+   * Gets a user friendship.
+   * @param {string} username The username of the friend to get.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   getUserFriendship(username) {
@@ -380,10 +365,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Add a friend with passed User Id
-   * @param {number} userId
+   * Add a user as a friend.
+   * @param {number} userId The identifier of the user to add as a friend.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   friendAdd(userId) {
@@ -402,10 +386,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Remove a friend
-   * @param {number} id
+   * Remove a user as a friend.
+   * @param {number} id The identifier of the friend to remove.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   friendRemove(id) {
@@ -424,10 +407,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Accept the friend request with passed id
-   * @param {number} id
+   * Accept the friend request.
+   * @param {number} id The id of the friend request to accept.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   friendAccept(id) {
@@ -446,11 +428,10 @@ class SiteAPIManager {
   }
 
   /**
-   * Save profile data
-   * @param {string} method
-   * @param {any} data
+   * Save profile data.
+   * @param {string} method The http method.
+   * @param {any} data The fields to update.
    * @returns {Promise}
-   *
    * @memberof SiteAPIManager
    */
   save(method, data) {
@@ -473,9 +454,10 @@ class SiteAPIManager {
   }
 
   /**
-   * Change email preferences
-   * @param {any} data JSON POST data
-   *
+   * Change email preferences.
+   * @param {string} method The http method.
+   * @param {*} data JSON POST data.
+   * @returns {Promise}
    * @memberof SiteAPIManager
    */
   emailPreferences(method, data) {
@@ -498,9 +480,9 @@ class SiteAPIManager {
   }
 
   /**
-   * Change password
-   * @param {any} data JSON POST data
-   *
+   * Change the user password.
+   * @param {*} data JSON POST data.
+   * @returns {Promise}
    * @memberof SiteAPIManager
    */
   changePassword(data) {

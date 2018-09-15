@@ -1,16 +1,16 @@
 'use strict';
 
+const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
+
 /**
- * Represents a MediaItem Object
+ * Represents a MediaItem Object.
  * @class MediaItem
  */
 class MediaItem {
   /**
    * Creates an instance of MediaItem.
-   *
-   * @param {Client} client Game Jolt client
-   * @param {any} data The mediaItem data
-   *
+   * @param {Client} client The client instance.
+   * @param {*} data The mediaItem payload.
    * @constructor
    */
   constructor(client, data) {

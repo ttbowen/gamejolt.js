@@ -1,20 +1,19 @@
 # Game Jolt.js
 
-This is a client for interacting with the Game Jolt site API and chat.
-Currently written in ES6 JavaScript, with TypeScript support available.
+This is a JavaScript client for interacting with the Game Jolt site API and chat.
 
+Pull requests are also welcome. If you find any issues please open a new issue [here](https://github.com/bowenwaregames/gamejolt.js/issues).
 
 ## Installation
 
-To use this package you must install `node 4.4.7` or later.
+This requires `node 4.4.7` or later.
 
 ## Examples
 
-Below is a simple example to demonstrate the connection code using
-this library.
+Below is a simple example for demonstrating the client setup:
 
 ```javascript
-// Authentication credentials 
+// Authentication credentials
 const username = require('./auth.json').username;
 const password = require('./auth.json').password;
 
@@ -22,36 +21,33 @@ const client = new GameJolt.Client();
 
 // Chat Connection
 client.on('connected', data => {
+  console.log(`Connected to chat as ${data.username}!`);
 
-    console.log(`Connected to chat as ${data.username}!`);
-
-    // Enter Lobby room 
-    client.chat.enterRoom(GameJolt.PublicRooms.Lobby);
+  // Enter Lobby room
+  client.chat.enterRoom(GameJolt.PublicRooms.Lobby);
 });
 
-// Game Jolt Login 
-client.login(username, password).then(result => { });
+// Game Jolt Login
+client.login(username, password).then(result => {});
 ```
 
-Below is another example showing message events.
+Below is another example to demonstrate message events:
 
 ```javascript
-
-// Message event 
+// Message event
 client.on('message', message => {
+  if (message.toString() === 'ping') {
+    message.reply('pong');
+  }
 
-    if (message.toString() === 'ping') {
-        message.reply('pong');
-    }
-    
-    // Is the client user mentioned
-    if(message.isMentioned) {
-        message.reply(`Hello ${message.user.username}!`);
-    }
+  // Is the client user mentioned
+  if (message.isMentioned) {
+    message.reply(`Hello ${message.user.username}!`);
+  }
 });
 ```
 
 ## Help
 
-If you need help or have any questions about this package,
+If you need help or have any questions,
 then please contact me at `ttbowen11@hotmail.co.uk`.

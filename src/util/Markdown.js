@@ -3,40 +3,45 @@
  * @param {string} text
  * @returns {string}
  */
-function bold(text) { return `**${text}**` }
-
+function bold(text) {
+  return `**${text}**`;
+}
 
 /**
  * Return underlined markdown text
  * @param {string} text
  * @returns {string}
  */
-function underline(text) { return `__${text}__` }
-
+function underline(text) {
+  return `__${text}__`;
+}
 
 /**
  * Return italic markdown text
  * @param {string} text
  * @returns {string}
  */
-function italic(text) { return `*${text}*` }
-
+function italic(text) {
+  return `*${text}*`;
+}
 
 /**
- * 
+ *
  * Returns strikedout markdown text
  * @param {string} text
  * @returns {string}
  */
-function strikeout(text) { return `~~${text}~~` }
-
+function strikeout(text) {
+  return `~~${text}~~`;
+}
 
 /**
  * Add a @username mention
  * @param {string} username
  * @returns {string}
  */
-function addMention(username) {  return `[@${username}](@${username})` }
+function addMention(username) {
+  return `[@${username}](@${username})`;
+}
 
-
-module.exports = { bold, underline, italic, strikeout, addMention }
+module.exports = { bold, underline, italic, strikeout, addMention };

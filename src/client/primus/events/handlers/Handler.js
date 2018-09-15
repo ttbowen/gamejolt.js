@@ -1,14 +1,13 @@
 'use strict';
 
-
 class Handler {
-    constructor(eventManager) {
-        this.eventManager = eventManager;
-    }
+  constructor(eventManager) {
+    this.eventManager = eventManager;
+  }
 
-    handle(payload) {
-        return payload;
-    }
+  handle(payload) {
+    return payload;
+  }
 }
 
 module.exports = Handler;

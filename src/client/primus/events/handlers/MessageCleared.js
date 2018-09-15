@@ -1,17 +1,14 @@
 'use strict';
 
 const Handler = require('./Handler');
-const User = require('../../../../structures/chat/User');
 const Events = require('../../../../util/Events').Events;
 
-
 class MessageClearedHandler extends Handler {
+  handle(payload) {
+    const client = this.eventManager.client;
 
-    handle(payload) {
-        const client = this.eventManager.client;
-        
-        client.emit(Events.MESSAGE_CLEARED, payload.data);
-    }
+    client.emit(Events.MESSAGE_CLEARED, payload.data);
+  }
 }
 
 module.exports = MessageClearedHandler;

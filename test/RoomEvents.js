@@ -2,37 +2,41 @@
 
 const GameJolt = require('../');
 
-// Authentication credentials 
+// Authentication credentials
 const username = require('./auth.json').username;
 const password = require('./auth.json').password;
 
 const client = new GameJolt.Client();
 
 // Chat Connection
-client.on('connected', data => {
-    // Enter Lobby room 
-    client.chat.enterRoom(GameJolt.PublicRooms.Lobby);
+client.on('connected', () => {
+  // Enter Lobby room
+  client.chat.enterRoom(GameJolt.PublicRooms.Lobby);
 });
 
 // User entered room
-client.on('user-enter-room', (data) => {
-    console.log(data);
+client.on('user-enter-room', data => {
+  // eslint-disable-next-line
+  console.log(data);
 });
 
 // User left room
-client.on('user-leave-room', (data) => {
-    console.log(data);
+client.on('user-leave-room', data => {
+  // eslint-disable-next-line
+  console.log(data);
 });
 
 // User muted
-client.on('user-muted', (data) => {
-    console.log(data);
+client.on('user-muted', data => {
+  // eslint-disable-next-line
+  console.log(data);
 });
 
 // User unmuted
-client.on('user-unmuted', (data) => {
-    console.log(data);
+client.on('user-unmuted', data => {
+  // eslint-disable-next-line
+  console.log(data);
 });
 
-// Game Jolt Login 
-client.login(username, password).then(result => { });
+// Game Jolt Login
+client.login(username, password).then(() => {});

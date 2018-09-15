@@ -10,66 +10,68 @@ const Markdown = require('../../util/Markdown');
  * @class Message
  */
 class Message {
-  
-    /**
-     * Creates an instance of Message.
-     * 
-     * @param {Client} client The Game Jolt client
-     * @param {any} data The message data
-     * 
-     * @constructor
-     */
-    constructor(client, data) {
-        this.client = client;
+  /**
+   * Creates an instance of Message.
+   *
+   * @param {Client} client The Game Jolt client
+   * @param {any} data The message data
+   *
+   * @constructor
+   */
+  constructor(client, data) {
+    this.client = client;
 
-        if (data) this.setup(data);
-    }
-    
-    setup(data) {
-        this.id = data.id;
-        this.userId = data.userId;
-        this.user = new User(this.client, data.user);
-        this.roomId = data.roomId;
-        this.room = new Room(this.client, data.room);
-        this.content = data.content;
-        this.contentRaw = data.contentRaw;
-        this.loggedOn = new Date(data.loggedOn);
-        this.status = data.status;
-        this.replied = false;
-    }
+    if (data) this.setup(data);
+  }
 
-    /**
-     * Reply to a chat message
-     * @param {string} content The message content
-     * 
-     * @memberof Message
-     */
-    reply(content) {
-        if (this.user.id === this.client.chat.me.id) return;
+  setup(data) {
+    this.id = data.id;
+    this.userId = data.userId;
+    this.user = new User(this.client, data.user);
+    this.roomId = data.roomId;
+    this.room = new Room(this.client, data.room);
+    this.content = data.content;
+    this.contentRaw = data.contentRaw;
+    this.loggedOn = new Date(data.loggedOn);
+    this.status = data.status;
+    this.replied = false;
+  }
 
-        const author = this.room.type != ChatConfig.ROOM_PM ? Markdown.addMention(this.user.username) : '';
-        content = `${author} ${content}`;
+  /**
+   * Reply to a chat message
+   * @param {string} content The message content
+   *
+   * @memberof Message
+   */
+  reply(content) {
+    if (this.user.id === this.client.chat.me.id) return;
 
-        if (!this.hasReplied) this.client.chat.sendMessage(content, this.roomId);
+    const author =
+      this.room.type != ChatConfig.ROOM_PM
+        ? Markdown.addMention(this.user.username)
+        : '';
+    content = `${author} ${content}`;
 
-        this.replied = true;
-    }
+    if (!this.hasReplied) this.client.chat.sendMessage(content, this.roomId);
 
-    /**
-     * 
-     * Check if the client user has been mentioned in message
-     * @readonly
-     * 
-     * @memberof Message
-     */
-    get isMentioned() {
-        const mention = new RegExp(`((@)*${this.client.chat.me.username})`);
-        return mention.test(this.contentRaw) ? true : false;
-    }
-    
-    toString() {
-        return this.contentRaw;
-    }
+    this.replied = true;
+  }
+
+  /**
+   *
+   * Check if the client user has been mentioned in message
+   * @readonly
+   *
+   * @memberof Message
+   */
+  get isMentioned() {
+    const mention = new RegExp(`((@)*${this.client.chat.me.username})`);
+    return mention.test(this.contentRaw) ? true : false;
+  }
+
+  toString() {
+    return this.contentRaw;
+  }
 }
 
 module.exports = Message;

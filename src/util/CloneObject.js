@@ -4,9 +4,9 @@
  * @returns {Object} The cloned object
  */
 function cloneObject(obj) {
-    const clone = Object.create(obj);
-    Object.assign(clone, obj);
-    return clone;
-};
+  const clone = Object.create(obj);
+  Object.assign(clone, obj);
+  return clone;
+}
 
-module.exports = cloneObject; 
+module.exports = cloneObject;

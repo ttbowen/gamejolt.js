@@ -1,26 +1,24 @@
 /// <reference path='index.d.ts' />
 
-import * as gamejolt from 'gamejolt.js';
+import { Client, User, PublicRooms, Message } from 'gamejolt.js';
 
-let client = new gamejolt.Client();
+const client: Client = new Client();
 
 // On connected event
-client.on('connected', (user) => {
+client.on('connected', (user: User) => {
+  // Enter lobby chat
+  client.chat.enterRoom(PublicRooms.lobby);
 
-    // Enter lobby chat
-    client.chat.enterRoom(gamejolt.PublicRooms.Lobby);
-
-    console.log(`Joined chat as ${user.displayName}`);
+  console.log(`Joined chat as ${user.displayName}`);
 });
 
-// On message event 
-client.on('message', (message) => {
+// On message event
+client.on('message', (message: Message) => {
+  if (message.isMentioned) {
+    console.log('We have been mentioned!');
+  }
 
-    if (message.isMentioned) {
-        console.log("We have been mentioned!");
-    }
-
-    if (message.toString() == 'ping') {
-        message.reply('pong!');
-    }
+  if (message.toString() === 'ping') {
+    message.reply('pong!');
+  }
 });

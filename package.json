@@ -5,7 +5,7 @@
   "main": "./src/index",
   "types": "./typings/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc --reporter=html mocha --timeout=3000 --exit"
   },
   "keywords": [
     "client",
@@ -39,6 +39,10 @@
     "eslint": "^5.5.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^2.6.2",
-    "prettier": "^1.14.2"
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "prettier": "^1.14.2",
+    "proxyquire": "^2.1.0",
+    "sinon": "^6.3.3"
   }
 }

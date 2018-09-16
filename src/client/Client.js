@@ -15,7 +15,7 @@ const ClientUser = require('../structures/site/ClientUser');
 class Client extends events.EventEmitter {
   /**
    * Creates an instance of Client.
-   * @param {any} options The client options.
+   * @param {*} options The client options.
    * @param {number} [options.countInterval=300] Interval to request friend and notification count.
    * @param {number} [options.friendRequestInterval=180] Interval to fetch friend requests.
    * @constructor
@@ -118,17 +118,16 @@ class Client extends events.EventEmitter {
   /**
    * Login to Game Jolt account and establish connection
    * to the Game Jolt chat. Requires Game Jolt username and password.
-   * @param {*} username Game Jolt username.
-   * @param {*} password Game Jolt password.
+   * @param {string} username Game Jolt username.
+   * @param {string} password Game Jolt password.
    * @returns {Promise}
    * @memberof Client
    */
   login(username, password) {
+    const instance = this;
     if (username === '' || password === '') {
       throw new Error('You must pass in a valid username and password');
     }
-
-    const instance = this;
 
     return new Promise(resolve => {
       this.api.auth(username, password).then(result => {

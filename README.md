@@ -1,4 +1,5 @@
 # Game Jolt.js
+[![Build Status](https://travis-ci.org/bowenwaregames/gamejolt.js.svg?branch=dev)](https://travis-ci.org/bowenwaregames/gamejolt.js)
 
 This is a JavaScript client for interacting with the Game Jolt site API and chat.
 
@@ -24,7 +25,7 @@ client.on('connected', data => {
   console.log(`Connected to chat as ${data.username}!`);
 
   // Enter Lobby room
-  client.chat.enterRoom(GameJolt.PublicRooms.Lobby);
+  client.chat.enterRoom(GameJolt.PublicRooms.lobby);
 });
 
 // Game Jolt Login

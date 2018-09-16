@@ -5,7 +5,10 @@
   "main": "./src/index",
   "types": "./typings/index.d.ts",
   "scripts": {
-    "test": "nyc --reporter=html mocha --timeout=3000 --exit"
+    "test": "nyc --reporter=html --reporter=text mocha --timeout=3000 --exit",
+    "coverage": "nyc report --reporter=text=lcov | coveralls",
+    "lint": "eslint src/**",
+    "lint:fix": "eslint src/** --fix"
   },
   "keywords": [
     "client",

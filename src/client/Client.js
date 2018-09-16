@@ -151,7 +151,7 @@ class Client extends events.EventEmitter {
     const instance = this;
     this.username = '';
     this.api.logout().then(() => {
-      instance.client.chat.logout();
+      instance.chat.logout();
     });
   }
 

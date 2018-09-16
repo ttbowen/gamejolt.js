@@ -2,8 +2,8 @@
 
 const Client = require('../../client/Client'); // eslint-disable-line no-unused-vars
 const SiteUser = require('./SiteUser');
-const ProfileEdit = require('../../client/api/payloads/ProfileEdit');
-const EmailEdit = require('../../client/api/payloads/EmailEdit');
+const ProfileEdit = require('../../client/api/Payloads/ProfileEdit');
+const EmailEdit = require('../../client/api/Payloads/EmailEdit');
 
 /**
  * Represents the Client user.

@@ -20,7 +20,7 @@ class Notification {
 
   setup(data) {
     this.id = data.id;
-    this.scroll_id = new Date(data.scroll_id);
+    this.scroll_id = data.scroll_id;
     this.user_id = data.user_id;
     this.viewed_on = new Date(data.viewed_on);
     this.type = data.type;

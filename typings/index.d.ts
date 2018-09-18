@@ -37,7 +37,7 @@ declare module 'gamejolt.js' {
         public type: string;
         public title: string;
         public descriptionMarkdown: string;
-        public lastMessageOn: Date;
+        public lastMessageOn: number;
         public staff: any[];
         public status: string;
 

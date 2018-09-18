@@ -23,7 +23,7 @@ class Room {
     this.type = data.type;
     this.title = data.title;
     this.descriptionMarkdown = data.description_markdown;
-    this.lastMessageOn = new Date(data.lastMessageOn);
+    this.lastMessageOn = data.lastMessageOn;
     this.staff = data.staff;
     this.status = data.status;
   }

@@ -31,7 +31,7 @@ class Message {
     this.room = new Room(this.client, data.room);
     this.content = data.content;
     this.contentRaw = data.contentRaw;
-    this.loggedOn = new Date(data.loggedOn);
+    this.loggedOn = data.loggedOn;
     this.status = data.status;
     this.replied = false;
   }
@@ -44,11 +44,11 @@ class Message {
   reply(content) {
     if (this.user.id === this.client.chat.me.id) return;
 
-    const author =
-      this.room.type != ChatConfig.ROOM_PM
-        ? Markdown.addMention(this.user.username)
-        : '';
+    const isPm = this.room.type === ChatConfig.ROOM_PM;
+    const author = !isPm ? Markdown.addMention(this.user.username) : '';
+
     content = `${author} ${content}`;
+    content = content.trim();
 
     if (!this.hasReplied) this.client.chat.sendMessage(content, this.roomId);
 

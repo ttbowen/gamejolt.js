@@ -1,5 +1,6 @@
 # Game Jolt.js
 [![Build Status](https://travis-ci.org/bowenwaregames/gamejolt.js.svg?branch=dev)](https://travis-ci.org/bowenwaregames/gamejolt.js)
+[![Coverage Status](https://coveralls.io/repos/github/bowenwaregames/gamejolt.js/badge.svg?branch=dev)](https://coveralls.io/github/bowenwaregames/gamejolt.js?branch=dev)
 
 This is a JavaScript client for interacting with the Game Jolt site API and chat.
 

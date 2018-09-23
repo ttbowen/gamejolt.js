@@ -85,7 +85,7 @@ describe('Message ', () => {
       ]);
     });
 
-    it('should remove the first message if max length has been exceeded', () => {
+    it('should add the message to messages collection on chat client', () => {
       const roomId = payload.data.message.roomId;
       client.chat.messages[roomId] = [];
 
